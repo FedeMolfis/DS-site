@@ -1,0 +1,1142 @@
+{
+  "Switch": {
+    "track-off": {
+      "$type": "color",
+      "$value": "{background.secondary}",
+      "$extensions": {
+        "resolved": "#F3F4F6"
+      }
+    },
+    "track-on": {
+      "$type": "color",
+      "$value": "{action.primary.default}",
+      "$extensions": {
+        "resolved": "#4F46E5"
+      }
+    },
+    "thumb": {
+      "$type": "color",
+      "$value": "{background.primary}",
+      "$extensions": {
+        "resolved": "#FFFFFF"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{Space.M}",
+        "$description": "16px, reutiliza Space/M.",
+        "$extensions": {
+          "resolved": "16px"
+        }
+      },
+      "inset": {
+        "$type": "dimension",
+        "$value": "{Space.XXS}",
+        "$description": "4px de separación entre thumb y borde del track, reutiliza Space/XXS.",
+        "$extensions": {
+          "resolved": "4px"
+        }
+      }
+    },
+    "thumb-border": {
+      "$type": "color",
+      "$value": "{border.default}",
+      "$extensions": {
+        "resolved": "#9CA3AF"
+      }
+    },
+    "label": {
+      "$type": "color",
+      "$value": "{text.primary}",
+      "$extensions": {
+        "resolved": "#0F172A"
+      }
+    },
+    "helper": {
+      "$type": "color",
+      "$value": "{text.secondary}",
+      "$extensions": {
+        "resolved": "#334155"
+      }
+    },
+    "track": {
+      "width": {
+        "$type": "dimension",
+        "$value": "{Space.2XXL}",
+        "$description": "40px. = thumb*2 + inset*2, reutiliza Space/2XXL.",
+        "$extensions": {
+          "resolved": "40px"
+        }
+      },
+      "height": {
+        "$type": "dimension",
+        "$value": "{Space.XL}",
+        "$description": "24px. = thumb + inset*2, reutiliza Space/XL.",
+        "$extensions": {
+          "resolved": "24px"
+        }
+      },
+      "radius": {
+        "$type": "dimension",
+        "$value": "{radius.Full}",
+        "$description": "Pill, reutiliza radius/Full.",
+        "$extensions": {
+          "resolved": "9999 (pill)"
+        }
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{action.focus.default}",
+        "$description": "Anillo de foco, reutiliza action/focus/default (mismo token que Button).",
+        "$extensions": {
+          "resolved": "#4F46E5"
+        }
+      }
+    }
+  },
+  "Input": {
+    "text": {
+      "placeholder": {
+        "$type": "color",
+        "$value": "{text.tertiary}",
+        "$extensions": {
+          "resolved": "#64748B"
+        }
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{text.primary}",
+        "$extensions": {
+          "resolved": "#0F172A"
+        }
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{text.disabled}",
+        "$extensions": {
+          "resolved": "#94A3B8"
+        }
+      },
+      "helper-default": {
+        "$type": "color",
+        "$value": "{text.secondary}",
+        "$extensions": {
+          "resolved": "#334155"
+        }
+      },
+      "helper-error": {
+        "$type": "color",
+        "$value": "{Status.danger.content}",
+        "$extensions": {
+          "resolved": "#B91C1C"
+        }
+      },
+      "helper-success": {
+        "$type": "color",
+        "$value": "{Status.success.content}",
+        "$extensions": {
+          "resolved": "#047857"
+        }
+      }
+    },
+    "label": {
+      "default": {
+        "$type": "color",
+        "$value": "{text.secondary}",
+        "$extensions": {
+          "resolved": "#334155"
+        }
+      }
+    },
+    "background": {
+      "default": {
+        "$type": "color",
+        "$value": "{background.primary}",
+        "$extensions": {
+          "resolved": "#FFFFFF"
+        }
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{background.secondary}",
+        "$extensions": {
+          "resolved": "#F3F4F6"
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{border.default}",
+        "$extensions": {
+          "resolved": "#9CA3AF"
+        }
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{border.strong}",
+        "$extensions": {
+          "resolved": "#64748B"
+        }
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{border.brand}",
+        "$extensions": {
+          "resolved": "#4F46E5"
+        }
+      },
+      "error": {
+        "$type": "color",
+        "$value": "{Status.danger.content}",
+        "$extensions": {
+          "resolved": "#B91C1C"
+        }
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{Status.success.content}",
+        "$extensions": {
+          "resolved": "#047857"
+        }
+      }
+    },
+    "radius": {
+      "$type": "dimension",
+      "$value": "{radius.action}",
+      "$description": "Reutiliza radius/action (mismo semántico que Button).",
+      "$extensions": {
+        "resolved": "8px"
+      }
+    },
+    "padding-x": {
+      "$type": "dimension",
+      "$value": "{Space.M}",
+      "$description": "16px, reutiliza Space/M.",
+      "$extensions": {
+        "resolved": "16px"
+      }
+    },
+    "padding-y": {
+      "$type": "dimension",
+      "$value": "{Space.XS}",
+      "$description": "8px, reutiliza Space/XS.",
+      "$extensions": {
+        "resolved": "8px"
+      }
+    },
+    "font-size": {
+      "$type": "dimension",
+      "$value": "{Typography.size.SM}",
+      "$description": "14px, reutiliza Typography/size/SM.",
+      "$extensions": {
+        "resolved": "14px"
+      }
+    },
+    "line-height": {
+      "$type": "dimension",
+      "$value": "{Typography.line-height.sm}",
+      "$description": "20px, reutiliza Typography/line-height/sm.",
+      "$extensions": {
+        "resolved": "20px"
+      }
+    },
+    "font-weight": {
+      "$type": "fontWeight",
+      "$value": "{Typography.weight.regular}",
+      "$description": "Regular — el valor tipeado no lleva weight medium como los labels de control.",
+      "$extensions": {
+        "resolved": "Regular"
+      }
+    }
+  },
+  "Checkbox": {
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{border.default}",
+        "$extensions": {
+          "resolved": "#9CA3AF"
+        }
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{border.strong}",
+        "$extensions": {
+          "resolved": "#64748B"
+        }
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{border.brand}",
+        "$extensions": {
+          "resolved": "#4F46E5"
+        }
+      },
+      "error": {
+        "$type": "color",
+        "$value": "{Status.danger.content}",
+        "$extensions": {
+          "resolved": "#B91C1C"
+        }
+      }
+    },
+    "background": {
+      "default": {
+        "$type": "color",
+        "$value": "{background.primary}",
+        "$extensions": {
+          "resolved": "#FFFFFF"
+        }
+      },
+      "selected": {
+        "$type": "color",
+        "$value": "{action.primary.default}",
+        "$extensions": {
+          "resolved": "#4F46E5"
+        }
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{background.secondary}",
+        "$extensions": {
+          "resolved": "#F3F4F6"
+        }
+      }
+    },
+    "icon": {
+      "selected": {
+        "$type": "color",
+        "$value": "{text.inverse}",
+        "$extensions": {
+          "resolved": "#FFFFFF"
+        }
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{text.disabled}",
+        "$extensions": {
+          "resolved": "#94A3B8"
+        }
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{Space.S}",
+        "$description": "12px, reutiliza Space/S. Checkmark centrado dentro del box de 16px.",
+        "$extensions": {
+          "resolved": "12px"
+        }
+      }
+    },
+    "text": {
+      "label": {
+        "$type": "color",
+        "$value": "{text.primary}",
+        "$extensions": {
+          "resolved": "#0F172A"
+        }
+      },
+      "helper": {
+        "$type": "color",
+        "$value": "{text.secondary}",
+        "$extensions": {
+          "resolved": "#334155"
+        }
+      },
+      "helper-error": {
+        "$type": "color",
+        "$value": "{Status.danger.content}",
+        "$extensions": {
+          "resolved": "#B91C1C"
+        }
+      }
+    },
+    "box": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{Space.M}",
+        "$description": "16px, reutiliza Space/M.",
+        "$extensions": {
+          "resolved": "16px"
+        }
+      },
+      "radius": {
+        "$type": "dimension",
+        "$value": "{radius.XS}",
+        "$description": "4px, reutiliza radius/XS (primer uso de un radius chico para controles, distinto del 8px de radius/action).",
+        "$extensions": {
+          "resolved": "4px"
+        }
+      }
+    }
+  },
+  "Button": {
+    "radius": {
+      "$type": "dimension",
+      "$value": "{radius.action}",
+      "$extensions": {
+        "resolved": "8px"
+      }
+    },
+    "SM": {
+      "padding-x": {
+        "$type": "dimension",
+        "$value": "{Space.S}",
+        "$extensions": {
+          "resolved": "12px"
+        }
+      },
+      "padding-y": {
+        "$type": "dimension",
+        "$value": "{Space.XXS}",
+        "$extensions": {
+          "resolved": "4px"
+        }
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{typography.action.SM.font-size}",
+        "$extensions": {
+          "resolved": "12px"
+        }
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{typography.action.SM.line-height}",
+        "$extensions": {
+          "resolved": "16px"
+        }
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{typography.action.SM.font-weight}",
+        "$extensions": {
+          "resolved": "Medium"
+        }
+      },
+      "icon-size": {
+        "$type": "dimension",
+        "$value": "{typography.action.SM.icon-size}",
+        "$extensions": {
+          "resolved": "16px"
+        }
+      }
+    },
+    "MD": {
+      "padding-x": {
+        "$type": "dimension",
+        "$value": "{Space.M}",
+        "$extensions": {
+          "resolved": "16px"
+        }
+      },
+      "padding-y": {
+        "$type": "dimension",
+        "$value": "{Space.XS}",
+        "$extensions": {
+          "resolved": "8px"
+        }
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{typography.action.MD.font-size}",
+        "$extensions": {
+          "resolved": "14px"
+        }
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{typography.action.MD.line-height}",
+        "$extensions": {
+          "resolved": "20px"
+        }
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{typography.action.MD.font-weight}",
+        "$extensions": {
+          "resolved": "Medium"
+        }
+      },
+      "icon-size": {
+        "$type": "dimension",
+        "$value": "{typography.action.MD.icon-size}",
+        "$extensions": {
+          "resolved": "20px"
+        }
+      }
+    },
+    "LG": {
+      "padding-x": {
+        "$type": "dimension",
+        "$value": "{Space.L}",
+        "$extensions": {
+          "resolved": "20px"
+        }
+      },
+      "padding-y": {
+        "$type": "dimension",
+        "$value": "{Space.S}",
+        "$extensions": {
+          "resolved": "12px"
+        }
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{typography.action.LG.font-size}",
+        "$extensions": {
+          "resolved": "16px"
+        }
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{typography.action.LG.line-height}",
+        "$extensions": {
+          "resolved": "24px"
+        }
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{typography.action.LG.font-weight}",
+        "$extensions": {
+          "resolved": "Medium"
+        }
+      },
+      "icon-size": {
+        "$type": "dimension",
+        "$value": "{typography.action.LG.icon-size}",
+        "$extensions": {
+          "resolved": "24px"
+        }
+      }
+    },
+    "border": {
+      "focus": {
+        "$type": "color",
+        "$value": "{action.focus.default}",
+        "$extensions": {
+          "resolved": "#4F46E5"
+        }
+      }
+    },
+    "primary": {
+      "text": {
+        "$type": "color",
+        "$value": "{text.inverse}",
+        "$extensions": {
+          "resolved": "#FFFFFF"
+        }
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "{icon.inverse}",
+        "$extensions": {
+          "resolved": "#FFFFFF"
+        }
+      },
+      "background": {
+        "default": {
+          "$type": "color",
+          "$value": "{action.primary.default}",
+          "$extensions": {
+            "resolved": "#4F46E5"
+          }
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{action.primary.hover}",
+          "$extensions": {
+            "resolved": "#4338CA"
+          }
+        },
+        "pressed": {
+          "$type": "color",
+          "$value": "{action.primary.pressed}",
+          "$extensions": {
+            "resolved": "#3730A3"
+          }
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{action.primary.disabled}",
+          "$extensions": {
+            "resolved": "#9CA3AF"
+          }
+        }
+      }
+    },
+    "secondary": {
+      "text": {
+        "$type": "color",
+        "$value": "{text.primary}",
+        "$extensions": {
+          "resolved": "#0F172A"
+        }
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "{icon.primary}",
+        "$extensions": {
+          "resolved": "#0F172A"
+        }
+      },
+      "border": {
+        "default": {
+          "$type": "color",
+          "$value": "{border.default}",
+          "$extensions": {
+            "resolved": "#9CA3AF"
+          }
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{border.strong}",
+          "$extensions": {
+            "resolved": "#64748B"
+          }
+        },
+        "pressed": {
+          "$type": "color",
+          "$value": "{border.brand}",
+          "$extensions": {
+            "resolved": "#4F46E5"
+          }
+        }
+      },
+      "background": {
+        "default": {
+          "$type": "color",
+          "$value": "{background.primary}",
+          "$extensions": {
+            "resolved": "#FFFFFF"
+          }
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{background.secondary}",
+          "$extensions": {
+            "resolved": "#F3F4F6"
+          }
+        },
+        "pressed": {
+          "$type": "color",
+          "$value": "{background.tertiary}",
+          "$extensions": {
+            "resolved": "#E5E7EB"
+          }
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{action.secondary.disabled}",
+          "$extensions": {
+            "resolved": "#9CA3AF"
+          }
+        }
+      }
+    },
+    "icon-secondary": {
+      "icon": {
+        "default": {
+          "$type": "color",
+          "$value": "{icon.primary}",
+          "$extensions": {
+            "resolved": "#0F172A"
+          }
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{icon.disabled}",
+          "$extensions": {
+            "resolved": "#94A3B8"
+          }
+        }
+      },
+      "border": {
+        "default": {
+          "$type": "color",
+          "$value": "{border.default}",
+          "$extensions": {
+            "resolved": "#9CA3AF"
+          }
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{border.strong}",
+          "$extensions": {
+            "resolved": "#64748B"
+          }
+        },
+        "focus": {
+          "$type": "color",
+          "$value": "{border.brand}",
+          "$extensions": {
+            "resolved": "#4F46E5"
+          }
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{border.subtle}",
+          "$extensions": {
+            "resolved": "#D1D5DB"
+          }
+        }
+      },
+      "background": {
+        "default": {
+          "$type": "color",
+          "$value": "{background.primary}",
+          "$extensions": {
+            "resolved": "#FFFFFF"
+          }
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{background.secondary}",
+          "$extensions": {
+            "resolved": "#F3F4F6"
+          }
+        },
+        "pressed": {
+          "$type": "color",
+          "$value": "{background.tertiary}",
+          "$extensions": {
+            "resolved": "#E5E7EB"
+          }
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{background.secondary}",
+          "$extensions": {
+            "resolved": "#F3F4F6"
+          }
+        }
+      },
+      "SM": {
+        "padding": {
+          "$type": "dimension",
+          "$value": "{Space.XXS}",
+          "$description": "Padding simétrico (4 lados) para el botón solo-ícono, para garantizar contenedor cuadrado. Distinto de Button/*/padding-x que es asimétrico (pensado para label de texto).",
+          "$extensions": {
+            "resolved": "4px"
+          }
+        }
+      },
+      "MD": {
+        "padding": {
+          "$type": "dimension",
+          "$value": "{Space.XS}",
+          "$description": "Padding simétrico (4 lados) para el botón solo-ícono, para garantizar contenedor cuadrado. Distinto de Button/*/padding-x que es asimétrico (pensado para label de texto).",
+          "$extensions": {
+            "resolved": "8px"
+          }
+        }
+      },
+      "LG": {
+        "padding": {
+          "$type": "dimension",
+          "$value": "{Space.S}",
+          "$description": "Padding simétrico (4 lados) para el botón solo-ícono, para garantizar contenedor cuadrado. Distinto de Button/*/padding-x que es asimétrico (pensado para label de texto).",
+          "$extensions": {
+            "resolved": "12px"
+          }
+        }
+      }
+    },
+    "link": {
+      "text": {
+        "default": {
+          "$type": "color",
+          "$value": "{text.brand.default}",
+          "$extensions": {
+            "resolved": "#4F46E5"
+          }
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{text.brand.hover}",
+          "$extensions": {
+            "resolved": "#4338CA"
+          }
+        },
+        "pressed": {
+          "$type": "color",
+          "$value": "{text.brand.pressed}",
+          "$extensions": {
+            "resolved": "#3730A3"
+          }
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{text.disabled}",
+          "$extensions": {
+            "resolved": "#94A3B8"
+          }
+        }
+      },
+      "icon": {
+        "default": {
+          "$type": "color",
+          "$value": "{action.primary.default}",
+          "$extensions": {
+            "resolved": "#4F46E5"
+          }
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{action.primary.hover}",
+          "$extensions": {
+            "resolved": "#4338CA"
+          }
+        },
+        "pressed": {
+          "$type": "color",
+          "$value": "{action.primary.pressed}",
+          "$extensions": {
+            "resolved": "#3730A3"
+          }
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{action.primary.disabled}",
+          "$extensions": {
+            "resolved": "#9CA3AF"
+          }
+        }
+      }
+    }
+  },
+  "Alert": {
+    "title": {
+      "$type": "color",
+      "$value": "{text.primary}",
+      "$extensions": {
+        "resolved": "#0F172A"
+      }
+    },
+    "description": {
+      "$type": "color",
+      "$value": "{text.secondary}",
+      "$extensions": {
+        "resolved": "#334155"
+      }
+    },
+    "background": {
+      "success": {
+        "$type": "color",
+        "$value": "{Status.success.background}",
+        "$extensions": {
+          "resolved": "#ECFDF5"
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{Status.warning.background}",
+        "$extensions": {
+          "resolved": "#FFFBEB"
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{Status.danger.background}",
+        "$extensions": {
+          "resolved": "#FEF2F2"
+        }
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{Status.info.background}",
+        "$extensions": {
+          "resolved": "#EFF6FF"
+        }
+      }
+    },
+    "border": {
+      "success": {
+        "$type": "color",
+        "$value": "{Status.success.content}",
+        "$extensions": {
+          "resolved": "#047857"
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{Status.warning.content}",
+        "$extensions": {
+          "resolved": "#B45309"
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{Status.danger.content}",
+        "$extensions": {
+          "resolved": "#B91C1C"
+        }
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{Status.info.content}",
+        "$extensions": {
+          "resolved": "#1D4ED8"
+        }
+      }
+    },
+    "icon": {
+      "success": {
+        "$type": "color",
+        "$value": "{Status.success.content}",
+        "$extensions": {
+          "resolved": "#047857"
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{Status.warning.content}",
+        "$extensions": {
+          "resolved": "#B45309"
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{Status.danger.content}",
+        "$extensions": {
+          "resolved": "#B91C1C"
+        }
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{Status.info.content}",
+        "$extensions": {
+          "resolved": "#1D4ED8"
+        }
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{typography.action.MD.icon-size}",
+        "$description": "20px, reutiliza typography/action/MD/icon-size — mismo tamaño de ícono \"medio\" que ya usa Button.",
+        "$extensions": {
+          "resolved": "20px"
+        }
+      }
+    },
+    "radius": {
+      "$type": "dimension",
+      "$value": "{radius.action}",
+      "$description": "Reutiliza radius/action (mismo semántico que Button/Input).",
+      "$extensions": {
+        "resolved": "8px"
+      }
+    },
+    "padding": {
+      "$type": "dimension",
+      "$value": "{Space.M}",
+      "$description": "16px, simétrico en los 4 lados (contenedor tipo card, no hay runway de texto que justifique asimetría). Reutiliza Space/M.",
+      "$extensions": {
+        "resolved": "16px"
+      }
+    },
+    "gap-icon-text": {
+      "$type": "dimension",
+      "$value": "{Space.XS}",
+      "$description": "8px entre ícono y columna de texto. Reutiliza Space/XS.",
+      "$extensions": {
+        "resolved": "8px"
+      }
+    },
+    "gap-title-description": {
+      "$type": "dimension",
+      "$value": "{Space.XXS}",
+      "$description": "4px entre título y descripción. Reutiliza Space/XXS.",
+      "$extensions": {
+        "resolved": "4px"
+      }
+    }
+  },
+  "Toast": {
+    "text": {
+      "$type": "color",
+      "$value": "{text.inverse}",
+      "$description": "Blanco (text/inverse) — necesario porque el fondo ahora es sólido/saturado, no un tinte pálido.",
+      "$extensions": {
+        "resolved": "#FFFFFF"
+      }
+    },
+    "background": {
+      "success": {
+        "$type": "color",
+        "$value": "{Status.success.content}",
+        "$description": "Fondo sólido (no tinte pálido como Alert). Reutiliza Status/success/content — el mismo color que Alert usa para texto/borde, acá como fondo.",
+        "$extensions": {
+          "resolved": "#047857"
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{Status.warning.content}",
+        "$description": "Fondo sólido. Reutiliza Status/warning/content.",
+        "$extensions": {
+          "resolved": "#B45309"
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{Status.danger.content}",
+        "$description": "Fondo sólido. Reutiliza Status/danger/content.",
+        "$extensions": {
+          "resolved": "#B91C1C"
+        }
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{Status.info.content}",
+        "$description": "Fondo sólido. Reutiliza Status/info/content.",
+        "$extensions": {
+          "resolved": "#1D4ED8"
+        }
+      }
+    },
+    "icon": {
+      "success": {
+        "$type": "color",
+        "$value": "{icon.inverse}",
+        "$description": "Blanco (icon/inverse), igual en las 4 variantes ahora — antes usaba Status/success/content (que pasó a ser el fondo).",
+        "$extensions": {
+          "resolved": "#FFFFFF"
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{icon.inverse}",
+        "$description": "Blanco (icon/inverse), igual en las 4 variantes ahora.",
+        "$extensions": {
+          "resolved": "#FFFFFF"
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{icon.inverse}",
+        "$description": "Blanco (icon/inverse), igual en las 4 variantes ahora.",
+        "$extensions": {
+          "resolved": "#FFFFFF"
+        }
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{icon.inverse}",
+        "$description": "Blanco (icon/inverse), igual en las 4 variantes ahora.",
+        "$extensions": {
+          "resolved": "#FFFFFF"
+        }
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{typography.action.MD.icon-size}",
+        "$description": "20px, reutiliza typography/action/MD/icon-size — mismo tamaño que Button y Alert.",
+        "$extensions": {
+          "resolved": "20px"
+        }
+      }
+    },
+    "radius": {
+      "$type": "dimension",
+      "$value": "{radius.action}",
+      "$description": "Reutiliza radius/action, mismo semántico que Button/Input/Alert.",
+      "$extensions": {
+        "resolved": "8px"
+      }
+    },
+    "padding-x": {
+      "$type": "dimension",
+      "$value": "{Space.M}",
+      "$description": "16px, reutiliza Space/M.",
+      "$extensions": {
+        "resolved": "16px"
+      }
+    },
+    "padding-y": {
+      "$type": "dimension",
+      "$value": "{Space.S}",
+      "$description": "12px, reutiliza Space/S — más compacto verticalmente que Alert (Toast es una sola línea, no título+descripción).",
+      "$extensions": {
+        "resolved": "12px"
+      }
+    },
+    "gap-icon-text": {
+      "$type": "dimension",
+      "$value": "{Space.S}",
+      "$description": "12px, reutiliza Space/S.",
+      "$extensions": {
+        "resolved": "12px"
+      }
+    }
+  },
+  "Avatar": {
+    "text": {
+      "$type": "color",
+      "$value": "{text.primary}",
+      "$extensions": {
+        "resolved": "#0F172A"
+      }
+    },
+    "Size": {
+      "SM": {
+        "$type": "dimension",
+        "$value": "32px"
+      },
+      "MD": {
+        "$type": "dimension",
+        "$value": "40px"
+      },
+      "LG": {
+        "$type": "dimension",
+        "$value": "48px"
+      }
+    },
+    "icon": {
+      "default": {
+        "$type": "color",
+        "$value": "{icon.secondary}",
+        "$extensions": {
+          "resolved": "#334155"
+        }
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{icon.disabled}",
+        "$extensions": {
+          "resolved": "#94A3B8"
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{border.default}",
+        "$extensions": {
+          "resolved": "#9CA3AF"
+        }
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{border.brand}",
+        "$extensions": {
+          "resolved": "#4F46E5"
+        }
+      }
+    },
+    "background": {
+      "default": {
+        "$type": "color",
+        "$value": "{background.secondary}",
+        "$extensions": {
+          "resolved": "#F3F4F6"
+        }
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{background.tertiary}",
+        "$extensions": {
+          "resolved": "#E5E7EB"
+        }
+      }
+    }
+  }
+}

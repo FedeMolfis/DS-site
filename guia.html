@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guía · Design System for AI and Humans</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: barra superior + navegación lateral + contenido de lectura + índice de la página */
+:root{
+  --bg:#FAFAFC; --surface:#FFFFFF; --sunk:#F3F4F6; --fg:#0F172A; --muted:#334155; --faint:#5B6478;
+  --line:#E5E7EB; --line-strong:#9CA3AF; --accent:#4F46E5; --accent-ink:#3730A3; --accent-soft:#EEF2FF;
+  --ok:#047857; --ok-soft:#ECFDF5; --warn:#B45309; --warn-soft:#FFFBEB; --info:#1D4ED8; --info-soft:#EFF6FF;
+  --code-bg:#F1F2F7;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1020; --surface:#141829; --sunk:#1B2035; --fg:#E6E8F0; --muted:#B4BAD0; --faint:#9AA1BA;
+  --line:#272D45; --line-strong:#4A5272; --accent:#9FA6FF; --accent-ink:#C7CBFF; --accent-soft:#22264A;
+  --ok:#5FD3A6; --ok-soft:#0F2A22; --warn:#F3B661; --warn-soft:#2C2112; --info:#8FB4FF; --info-soft:#14223F;
+  --code-bg:#1B2035; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1020; --surface:#141829; --sunk:#1B2035; --fg:#E6E8F0; --muted:#B4BAD0; --faint:#9AA1BA;
+  --line:#272D45; --line-strong:#4A5272; --accent:#9FA6FF; --accent-ink:#C7CBFF; --accent-soft:#22264A;
+  --ok:#5FD3A6; --ok-soft:#0F2A22; --warn:#F3B661; --warn-soft:#2C2112; --info:#8FB4FF; --info-soft:#14223F;
+  --code-bg:#1B2035; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}a:hover{color:var(--accent-ink)}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+code{font-family:var(--mono);font-size:.84em;background:var(--code-bg);padding:.1em .38em;border-radius:4px;white-space:nowrap}
+pre{background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;font-size:13px;line-height:1.55}
+pre code{background:none;padding:0;white-space:pre;font-size:inherit}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.topbar-in{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-height:56px;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--fg);text-decoration:none;font-size:15px}
+.brand:hover{color:var(--fg)}
+.ver{font-family:var(--mono);font-size:12px;padding:2px 8px;border:1px solid var(--line);border-radius:6px;color:var(--muted)}
+.topbar .spacer{flex:1}
+.gen{font-size:12px;color:var(--faint)}
+.shell{display:flex;flex-wrap:wrap;align-items:flex-start;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));gap:0 40px;max-width:1400px;margin:0 auto}
+.side{flex:1 1 220px;max-width:260px;padding-block:28px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 56px);max-height:calc(100vh - 56px);overflow:auto}
+.side h4{margin:18px 0 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.side h4:first-child{margin-top:0}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--muted);text-decoration:none;font-size:14px}
+.side a:hover{background:var(--sunk);color:var(--fg)}
+.side a[aria-current="page"]{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.main{flex:999 1 520px;min-width:0;padding-block:36px 72px;display:flex;gap:48px;align-items:flex-start}
+.doc{flex:1 1 auto;min-width:0;max-width:780px}
+.toc{flex:0 0 200px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);font-size:13px}
+.toc h4{margin:0 0 8px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.toc a{display:block;padding:3px 0 3px 10px;border-left:1px solid var(--line);color:var(--muted);text-decoration:none}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent)}
+@media (max-width:1180px){.toc{display:none}}
+@media (max-width:820px){.side{position:static;max-width:none;max-height:none;padding-block:16px 0;flex-basis:100%;border-bottom:1px solid var(--line)}
+  .side nav{display:flex;flex-wrap:wrap;gap:4px}.side h4{display:none}.side a{padding:6px 10px;background:var(--sunk)}}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:34px;line-height:1.2;letter-spacing:-.02em;margin:6px 0 10px;text-wrap:balance}
+.lede{font-size:17px;color:var(--muted);margin:0 0 20px;max-width:62ch}
+.doc h2{font-size:22px;letter-spacing:-.01em;margin:44px 0 12px;padding-top:8px;text-wrap:balance;scroll-margin-top:80px}
+.doc h3{font-size:17px;margin:28px 0 8px;scroll-margin-top:80px}
+.doc h3 code{font-size:.9em}
+.doc p,.doc li{max-width:68ch}
+.doc ul,.doc ol{padding-left:22px}
+.doc li{margin:4px 0}
+.doc strong{font-weight:600}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin:14px 0 18px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-weight:600;font-size:12px;color:var(--muted);background:var(--sunk);padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td code{font-size:12px}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;box-shadow:inset 0 0 0 1px rgba(15,23,42,.18)}
+.mk{display:inline-flex;vertical-align:-2px;margin-right:4px}
+.mk.ok{color:var(--ok)}.mk.warn{color:var(--warn)}.mk.part{color:var(--info)}
+.callout{padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface)}
+.callout.ok{background:var(--ok-soft);border-color:transparent}
+.callout.warn{background:var(--warn-soft);border-color:transparent}
+.source{font-size:13px;color:var(--faint);border-left:2px solid var(--line);margin:0 0 8px;padding:2px 0 2px 12px}
+.source p{margin:0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:20px 0 8px}
+.facts div{background:var(--surface);padding:12px 14px}
+.facts dt{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.facts dd{margin:2px 0 0;font-size:14px;font-weight:500}
+.agent-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-family:var(--mono)}
+.preview{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:24px 0 4px}
+.preview-stage{background:#FFFFFF;padding:28px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;color:#0F172A}
+.preview-cap{font-size:12px;color:var(--faint);padding:8px 14px;border-top:1px solid var(--line);background:var(--surface)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:16px 0}
+.card{display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none;color:var(--fg)}
+.card:hover{border-color:var(--accent);color:var(--fg)}
+.card b{font-size:15px;font-weight:600}
+.card span{font-size:13px;color:var(--muted);line-height:1.45}
+.pill{display:inline-block;font-size:12px;font-weight:500;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.pill.done{background:var(--ok-soft);color:var(--ok)}
+.pill.review{background:var(--warn-soft);color:var(--warn)}
+.pill.open{background:var(--info-soft);color:var(--info)}
+.pill.semver{background:var(--accent-soft);color:var(--accent-ink);font-family:var(--mono);font-size:11px}
+.proto{font-size:13px;padding:10px 14px;border-radius:8px;background:var(--info-soft);color:var(--fg);margin:0 0 24px}
+.release{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:18px 20px;margin:16px 0}
+.release.draft{border-style:dashed;border-color:var(--line-strong)}
+.release header{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.release h2{margin:0;padding:0;font-family:var(--mono);font-size:19px;font-weight:500}
+.release h3{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:16px 0 4px}
+.release ul{margin:0}
+.dr{font-family:var(--mono);font-size:12px;color:var(--faint);white-space:nowrap}
+.foot{border-top:1px solid var(--line);margin-top:56px;padding-top:16px;font-size:12px;color:var(--faint)}
+/* vista previa: componentes renderizados con los valores de los tokens (modo claro del DS) */
+.pv-btn{display:inline-flex;align-items:center;gap:8px;border-radius:8px;font:500 14px/20px var(--sans);padding:8px 16px;border:1px solid transparent;cursor:pointer}
+.pv-btn.sm{font-size:12px;line-height:16px;padding:4px 12px}.pv-btn.lg{font-size:16px;line-height:24px;padding:12px 20px}
+.pv-primary{background:#4F46E5;color:#FFFFFF}.pv-primary:hover{background:#4338CA}.pv-primary:active{background:#3730A3}
+.pv-secondary{background:#FFFFFF;color:#0F172A;border-color:#9CA3AF}.pv-secondary:hover{background:#F3F4F6;border-color:#64748B}
+.pv-icon{background:#FFFFFF;color:#0F172A;border-color:#9CA3AF;padding:8px}.pv-icon:hover{background:#F3F4F6;border-color:#64748B}
+.pv-link{background:none;color:#4F46E5;padding:8px 4px}.pv-link:hover{color:#4338CA}
+.pv-btn:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+.pv-col{display:flex;flex-direction:column;gap:6px}
+.pv-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.pv-ctl{display:flex;gap:12px;align-items:flex-start;min-height:44px;cursor:pointer;padding:4px 0}
+.pv-ctl input{position:absolute;opacity:0;width:1px;height:1px}
+.pv-track{width:40px;height:24px;border-radius:999px;background:#F3F4F6;box-shadow:inset 0 0 0 1px #9CA3AF;position:relative;flex-shrink:0;transition:background .15s}
+.pv-track::after{content:"";position:absolute;top:4px;left:4px;width:16px;height:16px;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 1px #9CA3AF;transition:transform .15s}
+.pv-ctl input:checked+.pv-track{background:#4F46E5;box-shadow:none}
+.pv-ctl input:checked+.pv-track::after{transform:translateX(16px);box-shadow:none}
+.pv-ctl input:focus-visible+.pv-track,.pv-ctl input:focus-visible+.pv-box{outline:2px solid #4F46E5;outline-offset:3px}
+.pv-ctl.dis{opacity:.4;cursor:not-allowed}
+.pv-box{width:16px;height:16px;border-radius:4px;border:1px solid #9CA3AF;background:#FFFFFF;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;color:transparent}
+.pv-ctl:hover .pv-box{border-color:#64748B}
+.pv-ctl input:checked+.pv-box{background:#4F46E5;border-color:#4F46E5;color:#FFFFFF}
+.pv-ctl.err .pv-box{border-color:#B91C1C}
+.pv-lbl{font:500 14px/20px var(--sans);color:#0F172A}
+.pv-help{font:400 12px/16px var(--sans);color:#334155}
+.pv-help.err{color:#B91C1C}
+.pv-field{display:flex;flex-direction:column;gap:6px;width:280px;max-width:100%}
+.pv-field label{font:500 14px/20px var(--sans);color:#334155}
+.pv-field input{font:400 14px/20px var(--sans);color:#0F172A;background:#FFFFFF;border:1px solid #9CA3AF;border-radius:8px;padding:8px 16px;width:100%}
+.pv-field input::placeholder{color:#64748B}
+.pv-field input:hover{border-color:#64748B}
+.pv-field input:focus{outline:none;border:2px solid #4F46E5;padding:7px 15px}
+.pv-field.err input{border-color:#B91C1C}
+.pv-alert{display:flex;gap:8px;padding:16px;border-radius:8px;border:1px solid;width:100%;max-width:420px}
+.pv-alert b{display:block;font:500 14px/20px var(--sans);color:#0F172A}
+.pv-alert span{display:block;font:400 14px/20px var(--sans);color:#334155;margin-top:4px}
+.pv-alert svg{flex-shrink:0}
+.pv-toast{display:inline-flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;color:#FFFFFF;font:500 14px/20px var(--sans)}
+@media (prefers-reduced-motion:reduce){.pv-track,.pv-track::after{transition:none}}
+
+.tdesc{display:block;font-size:12px;color:var(--faint);margin-top:2px;max-width:42ch;white-space:normal}
+.status{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:13px;margin:16px 0 0}
+.status b{font-weight:600}
+.find{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:10px 0}
+.find h3{margin:0;font-size:15px}
+.find p{margin:0;grid-column:2;color:var(--muted);font-size:14px}
+.sev{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;white-space:nowrap;align-self:start;margin-top:2px}
+.sev.rule{background:var(--warn-soft);color:var(--warn)}.sev.check{background:var(--info-soft);color:var(--info)}.sev.ok{background:var(--ok-soft);color:var(--ok)}
+.meter{height:8px;border-radius:999px;background:var(--sunk);overflow:hidden;margin-top:6px}
+.meter span{display:block;height:100%;background:var(--accent)}
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="index.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent)"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>Design System for AI and Humans</a><span class="ver">v0.5.0</span>
+<span class="spacer"></span><span class="gen">Generado desde Figma con DS Copilot</span>
+</div></header>
+<div class="shell">
+<aside class="side"><nav aria-label="Documentación"><h4>Sistema</h4><a href="index.html">Inicio</a><a href="guia.html" aria-current="page">Guía y principios</a><a href="tokens.html">Tokens</a><a href="auditoria.html">Auditoría</a><h4>Componentes</h4><a href="componentes/button.html">Button</a><a href="componentes/input.html">Input</a><a href="componentes/switch.html">Switch</a><a href="componentes/checkbox.html">Checkbox</a><a href="componentes/alert.html">Alert</a><a href="componentes/toast.html">Toast</a><h4>Historial</h4><a href="decisiones.html">Decisiones</a><a href="changelog.html">Changelog</a><h4>Para agentes</h4><a href="agentes.html">Archivos legibles por IA</a></nav></aside>
+<main class="main"><article class="doc"><div class="eyebrow">Documento maestro</div><h1>Guía y principios</h1><a class="agent-link" href="md/DESIGN-SYSTEM.md">md/DESIGN-SYSTEM.md</a><div class="source"><p>Este documento es la fuente de verdad del design system. Está escrito para dos audiencias a la vez: personas (diseñadores, developers, PMs) y agentes de IA que necesiten leer, razonar o generar código a partir de él. Por eso la estructura es fija, predecible y evita ambigüedad.</p></div>
+<h2 id="0-como-leer-este-documento">0. Cómo leer este documento</h2>
+<ul>
+<li><strong>Humanos</strong>: leer de corrido, especialmente las secciones 1, 2 y 5.</li>
+<li><strong>IA / agentes</strong>: cada token y cada componente tiene una estructura de datos fija (ver <code>tokens/*.json</code> y <code>component-template.md</code>). No infieras valores: si un dato no está en el JSON o en la doc del componente, no existe todavía.</li>
+<li><strong>Fuente de verdad</strong>: Figma (Variables) → export a JSON → este repo. Nunca al revés. Si algo en código no coincide con Figma, gana Figma hasta que se sincronice.</li>
+</ul>
+<hr />
+<h2 id="1-principios">1. Principios</h2>
+<ol>
+<li><strong>Una sola fuente de verdad</strong>: los valores viven en Figma Variables. Todo lo demás (JSON, CSS, código) se genera o sincroniza a partir de eso.</li>
+<li><strong>Jerarquía estricta</strong>: <code>primitivo → semántico → componente</code>. Nunca al revés, nunca se saltea un nivel sin justificación documentada.</li>
+<li><strong>Nombra por intención, no por apariencia</strong>. <code>color.text.danger</code>, no <code>color.text.red</code>.</li>
+<li><strong>Todo token tiene descripción</strong>. Un valor sin descripción de propósito es información incompleta, tanto para una persona nueva en el equipo como para una IA.</li>
+<li><strong>Nada se borra, se deprecia</strong>. Los tokens tienen contrato con el código que los consume; eliminarlos rompe cosas silenciosamente.</li>
+</ol>
+<hr />
+<h2 id="2-arquitectura-de-tokens-3-capas">2. Arquitectura de tokens (3 capas)</h2>
+<h3 id="2-1-primitivos-primitive">2.1 Primitivos (<code>primitive</code>)</h3>
+<p>Son la paleta cruda: valores sin significado de uso. Nunca se consumen directo en un componente ni en UI final.</p>
+<pre><code>color.blue.500        = #2563EB
+color.gray.100         = #F3F4F6
+spacing.4              = 16px
+font-size.100          = 14px
+radius.200              = 8px
+</code></pre>
+<p><strong>Regla de naming</strong>: <code>{categoría}.{escala}</code> — escalas numéricas (50, 100, 200... 900) para permitir insertar valores intermedios a futuro sin romper naming.</p>
+<h3 id="2-2-semanticos-semantic">2.2 Semánticos (<code>semantic</code>)</h3>
+<p>Le dan propósito a un primitivo. Siempre <strong>referencian</strong> un primitivo (nunca un valor hardcodeado nuevo).</p>
+<pre><code>color.background.primary   → {color.blue.500}
+color.text.danger          → {color.red.600}
+color.border.subtle        → {color.gray.200}
+spacing.inset.md           → {spacing.4}
+typography.action.md.font-size → {typography.size.sm}
+</code></pre>
+<p><strong>Nota sobre categorías por rol</strong> (ej. <code>action</code>): cuando un conjunto de valores se repite entre varios componentes interactivos — tamaños de tipografía en Button, Input, Tabs; estados de color en cualquier control accionable — conviene agruparlo bajo un rol semántico compartido (<code>action.*</code>, <code>typography.action.*</code>) en vez de definirlo suelto dentro de un solo componente. Así se define una vez y todos los componentes alias contra lo mismo.</p>
+<p><strong>Regla de naming</strong>: <code>{categoría}.{rol}.{variante}</code> — el nombre describe <em>para qué se usa</em>, no de qué color es. Si mañana <code>color.text.danger</code> cambia de rojo a naranja, el nombre sigue siendo correcto.</p>
+<h3 id="2-3-componente-component">2.3 Componente (<code>component</code>)</h3>
+<p>Tokens específicos de un componente puntual. Referencian preferentemente un semántico; si no existe un semántico aplicable, se referencia un primitivo (y se evalúa si vale la pena crear el semántico).</p>
+<pre><code>button.background.default   → {color.background.primary}
+button.background.hover     → {color.background.primary.hover}
+button.text.default         → {color.text.on-primary}
+card.padding                → {spacing.inset.md}
+</code></pre>
+<p><strong>Regla de naming</strong>: <code>{componente}.{propiedad}.{variante}.{estado?}</code> — el estado va al final (<code>default</code>, <code>hover</code>, <code>pressed</code>, <code>disabled</code>, <code>focus</code>).</p>
+<h3 id="2-4-regla-de-dependencia-no-negociable">2.4 Regla de dependencia (no negociable)</h3>
+<pre><code>primitivo  →  semántico  →  componente
+</code></pre>
+<p>Un componente <strong>nunca</strong> referencia un primitivo directo si existe un semántico equivalente. Un semántico <strong>nunca</strong> trae un valor hardcodeado. Esto es lo que permite hacer un rebrand cambiando solo la capa semántica, sin tocar componentes.</p>
+<hr />
+<h2 id="3-formato-de-exportacion-a-definir-implementar">3. Formato de exportación (a definir/implementar)</h2>
+<p>Como todavía no hay export, la recomendación es usar el estándar <strong>W3C Design Tokens Community Group (DTCG)</strong>, porque:</p>
+<ul>
+<li>Es JSON tipado (<code>$type</code>, <code>$value</code>, <code>$description</code>), no un formato propietario.</li>
+<li>Lo entienden herramientas como Tokens Studio, Style Dictionary, y cualquier pipeline de CI que quieras armar después.</li>
+<li>Es el formato más fácil de parsear para una IA: estructura predecible, sin necesidad de inferir nada.</li>
+</ul>
+<h3 id="3-1-camino-sugerido">3.1 Camino sugerido</h3>
+<ol>
+<li>Instalar el plugin <strong>Tokens Studio for Figma</strong> y conectarlo a las Variables ya creadas (o migrar las Variables actuales a Tokens Studio si preferís seguir editando ahí).</li>
+<li>Configurar el export en 3 archivos separados, reflejando las 3 capas:
+   - <code>tokens/primitive.json</code>
+   - <code>tokens/semantic.json</code>
+   - <code>tokens/component.json</code></li>
+<li>Cada token exportado debe incluir <code>$description</code>. Esto no es opcional: es lo que convierte un JSON de valores en un JSON legible por una IA sin contexto adicional.</li>
+<li>(Opcional, cuando haya código) usar <strong>Style Dictionary</strong> para transformar estos JSON en CSS variables, TS, etc.</li>
+</ol>
+<p>Ver <code>tokens/tokens.example.json</code> en este mismo paquete para un ejemplo concreto de las 3 capas con sintaxis de referencia (<code>{color.blue.500}</code>).</p>
+<hr />
+<h2 id="4-documentacion-de-componentes">4. Documentación de componentes</h2>
+<h3 id="4-0-sistema-de-iconos">4.0 Sistema de íconos</h3>
+<p>Fuente única de íconos: librería de Figma <strong>Simple Design System</strong> (community, licencia CC BY 4.0). Ningún componente crea íconos custom por fuera de esta librería — evita inconsistencias de grosor de trazo, grid y aspect ratio entre componentes.</p>
+<ul>
+<li>Cada ícono es un componente individual (no un sprite ni un set con variantes de tamaño) — el grid nativo suele ser 20×20px.</li>
+<li>Para usarlo en otro tamaño (16px, 24px), se <strong>escala la instancia de forma uniforme</strong> (mismo valor en ancho y alto) — nunca se estira de forma no proporcional. Esto es lo que garantiza el 1:1 real; un ícono con proporciones distintas en ancho/alto es señal de que se aplicó mal, no de que la librería esté rota.</li>
+<li>Los componentes que llevan ícono exponen una property <code>Icon</code> de tipo <strong>instance-swap</strong> (no una property fija) para poder elegir cuál usar sin romper el binding a los demás tokens (color, tamaño, etc. siguen atados a las Variables del componente, no al ícono elegido).</li>
+<li>Ícono por defecto documentado por componente cuando aplica; cualquier otro ícono de la misma librería es válido como alternativa vía la property.</li>
+</ul>
+<p>Cada componente se documenta con la <strong>misma estructura exacta</strong> (ver <code>component-template.md</code>). La consistencia estructural es lo que le permite a una IA leer cualquier componente sin tener que "aprender" un formato nuevo cada vez.</p>
+<p>Campos obligatorios por componente:</p>
+<ul>
+<li>Descripción y propósito (cuándo usarlo / cuándo no)</li>
+<li>Anatomía (partes que lo componen)</li>
+<li>Variantes y props</li>
+<li>Estados (<code>default</code>, <code>hover</code>, <code>pressed</code>, <code>disabled</code>, <code>loading</code>, <code>focus</code>, <code>error</code>)</li>
+<li>Tokens que consume (lista explícita, no "los de siempre")</li>
+<li>Accesibilidad específica del componente</li>
+<li>Ejemplos de uso correcto / incorrecto (do/don't)</li>
+</ul>
+<hr />
+<h2 id="5-accesibilidad-reglas-transversales">5. Accesibilidad (reglas transversales)</h2>
+<p>Estas reglas aplican a <strong>todo</strong> el sistema, además de lo que cada componente documente puntualmente:</p>
+<ul>
+<li><strong>Contraste</strong>: mínimo WCAG AA — 4.5:1 para texto normal, 3:1 para texto grande (≥18px o ≥14px bold) y para elementos gráficos/UI.</li>
+<li><strong>Foco visible</strong>: todo elemento interactivo tiene un estado <code>focus</code> con token propio (<code>{componente}.border.focus</code> o similar). Nunca se remueve el outline sin reemplazo.</li>
+<li><strong>Target táctil mínimo</strong>: 44×44px para elementos interactivos en interfaces táctiles. <strong>Se resuelve con hitbox expandida, no agrandando el componente visual</strong> — el tamaño que se ve en Figma/diseño no cambia; en implementación, el área clickeable real (padding invisible, <code>::before</code>/pseudo-elemento, o el contenedor clickeable) se extiende hasta 44×44 aunque el elemento visual sea más chico (ej. el track de Switch, 40×24 visual, con hitbox de 44×44 en el <code>&lt;label&gt;</code> o wrapper que lo contiene).</li>
+<li><strong>No depender solo del color</strong>: todo estado que se comunica con color (error, éxito, warning) debe tener un segundo indicador (ícono, texto, patrón).</li>
+<li><strong>Reduced motion</strong>: toda animación debe tener una alternativa o desactivarse respetando <code>prefers-reduced-motion</code>.</li>
+<li><strong>Semántica</strong>: cada componente documenta qué rol/ARIA le corresponde cuando se implemente en código.</li>
+</ul>
+<h3 id="5-1-alcance-de-plataforma-web-responsive-incluye-mobile-web">5.1 Alcance de plataforma: web responsive (incluye mobile web)</h3>
+<p>No hay componentes ni tokens separados para mobile — es <strong>un solo set de componentes</strong> que responde. Esto tiene consecuencias concretas a tener en cuenta en cada componente nuevo:</p>
+<ul>
+<li><strong>Hover es progresivo, no un requisito</strong>: el estado <code>hover</code> existe para dispositivos con puntero (mouse/trackpad). En touch no hay hover real — el navegador lo simula de forma inconsistente al primer tap. Ningún componente puede depender de <code>hover</code> para comunicar información necesaria; siempre tiene que haber un estado accesible sin él (esto ya lo cubre la regla "no depender solo del color", pero acá aplica también a la sola presencia del estado).</li>
+<li><strong>Anchos fijos en Figma son de referencia, no un token</strong>: cuando un componente en Figma tiene un ancho fijo (ej. Input a 280px), es una decisión de lienzo para poder visualizarlo, no un valor a respetar en implementación. Salvo que el token documente explícitamente un <code>max-width</code>, el comportamiento por defecto en código es ancho fluido (<code>100%</code> del contenedor).</li>
+<li><strong>Target táctil, siempre 44×44 mínimo vía hitbox</strong> (ver regla arriba) — aplica en mobile web igual que en una app nativa; no es exclusivo de contextos "táctiles" en sentido estricto, un trackpad/mouse en una laptop táctil también se beneficia.</li>
+</ul>
+<hr />
+<h2 id="6-contribucion-y-gobernanza">6. Contribución y gobernanza</h2>
+<h3 id="6-1-cuando-crear-un-token-nuevo">6.1 Cuándo crear un token nuevo</h3>
+<ul>
+<li><strong>Primitivo nuevo</strong>: solo si el valor no existe en la escala actual (ej: un nuevo color de marca). Requiere aprobación de diseño.</li>
+<li><strong>Semántico nuevo</strong>: cuando un rol de uso se repite en 2+ lugares y no hay uno existente que lo cubra. Antes de crear uno, buscar si alguno existente aplica.</li>
+<li><strong>Token de componente</strong>: se crea junto con el componente, y siempre debe poder trazarse a un semántico.</li>
+</ul>
+<h3 id="6-2-versionado">6.2 Versionado</h3>
+<ul>
+<li>Semver a nivel del paquete de tokens: <code>MAJOR.MINOR.PATCH</code>.</li>
+<li><code>MAJOR</code>: se elimina o cambia el significado de un token existente.</li>
+<li><code>MINOR</code>: se agregan tokens nuevos.</li>
+<li><code>PATCH</code>: se ajusta un valor sin cambiar el nombre/contrato.</li>
+</ul>
+<h3 id="6-3-deprecacion">6.3 Deprecación</h3>
+<p>Nunca se borra un token en uso. Se marca:</p>
+<pre><code class="language-json">&quot;button.background.legacy&quot;: {
+  &quot;$value&quot;: &quot;{color.blue.500}&quot;,
+  &quot;$deprecated&quot;: &quot;Usar button.background.default. Se elimina en v3.0.0&quot;
+}
+</code></pre>
+<h3 id="6-4-revision">6.4 Revisión</h3>
+<p>Todo token o componente nuevo pasa por: propuesta → revisión de diseño → revisión de accesibilidad → merge. (Ajustar este flujo al proceso real del equipo cuando exista.)</p>
+<h3 id="6-5-el-nombre-de-la-coleccion-de-figma-es-parte-del-contrato">6.5 El nombre de la colección de Figma es parte del contrato</h3>
+<p>Cada alias entre capas (<code>semántico → primitivo</code>, <code>componente → semántico</code>) se guarda en el export con el <strong>nombre exacto</strong> de la colección de origen (<code>targetVariableSetName</code>), no solo el ID de la variable — y el ID no es portable entre archivos de Figma. Esto significa que:</p>
+<ul>
+<li><strong>Renombrar una colección en Figma rompe en silencio</strong> todos los alias que apunten a ella desde otras colecciones. El error no aparece en el momento de renombrar, sino después, al reexportar o reimportar.</li>
+<li>Al migrar tokens a un archivo nuevo de Figma (o restaurar un export), la colección de destino tiene que llamarse <strong>exactamente igual</strong> (mayúsculas, espacios, todo) que en el archivo de origen — un import nativo de Variables puede fallar el 100% de los tokens de una capa si el nombre no coincide carácter por carácter, aunque los valores y la estructura sean correctos.</li>
+<li>Antes de renombrar cualquier colección existente, buscar qué otras colecciones la referencian como alias y actualizar en conjunto.</li>
+</ul>
+<h3 id="6-6-padding-compartido-no-siempre-es-reutilizable-texto-icono-vs-solo-icono">6.6 Padding compartido no siempre es reutilizable: texto+ícono vs. solo-ícono</h3>
+<p>Un padding pensado para un control con label de texto suele ser <strong>asimétrico a propósito</strong> (más espacio horizontal que vertical, para darle lugar al texto). Ese mismo padding aplicado a una variante <strong>solo-ícono</strong> rompe la forma cuadrada esperada — el contenedor sale rectangular en vez de 1:1.</p>
+<p>Regla: cualquier variante solo-ícono (icon-only button, futuros icon-only de otros componentes) necesita su <strong>propio token de padding simétrico</strong> (mismo valor en las 4 direcciones), no reutilizar el padding-x/padding-y del componente base. Buena noticia: casi nunca hace falta un valor nuevo — alcanza con alias el mismo primitivo que ya usa el <code>padding-y</code> (el eje vertical, más chico) del componente base, aplicado a los 4 lados.</p>
+<h3 id="6-7-tipografia-se-consolida-en-text-styles-no-en-el-nodo">6.7 Tipografía se consolida en Text Styles, no en el nodo</h3>
+<p>Cuando un mismo trío <code>font-size</code> / <code>line-height</code> / <code>font-weight</code> se aplica a texto en más de un lugar (label de Button, futuro Input, futuro Tabs), no se bindea variable por variable en cada nodo de texto — se crea un <strong>Text Style de Figma</strong> (uno por escalón de la escala compartida, ej. <code>Action/SM</code>, <code>Action/MD</code>, <code>Action/LG</code>), bindeado a las Variables semánticas correspondientes, y los nodos de texto consumen el Text Style.</p>
+<p>Por qué importa: bindear las 3 variables directo en cada nodo funciona, pero cambiar la tipografía o el weight del sistema entero implica tocar nodo por nodo — exactamente el problema que los tokens están para evitar. Un Text Style es el nivel de indirección que falta entre "la Variable cambió" y "todos los textos que la usan se actualizan solos".</p>
+<p>Regla práctica: si vas a bindear tipografía en más de un componente con la misma escala semántica (ej. <code>typography.action.*</code>), primero creá el Text Style; no repitas el binding nodo por nodo.</p>
+<h3 id="6-8-orden-de-operaciones-resize-pisa-el-sizing-mode-hug">6.8 Orden de operaciones: <code>resize()</code> pisa el sizing mode "hug"</h3>
+<p>Al construir con auto-layout, llamar <code>resize(ancho, alto)</code> <strong>después</strong> de fijar <code>primaryAxisSizingMode</code>/<code>counterAxisSizingMode</code> en <code>'AUTO'</code> (hug content) lo revierte silenciosamente a <code>'FIXED'</code> — sin error, sin warning. El frame queda con un alto/ancho literal en vez de ajustarse al contenido, aunque visualmente pueda no notarse hasta que se edita el contenido o se inspecciona el nodo.</p>
+<p>Regla: si un eje debe quedar en "hug content", el <code>resize()</code> (si hace falta) va <strong>antes</strong> de fijar ese eje en <code>AUTO</code>, nunca después. Más seguro todavía: evitar <code>resize()</code> del todo en el eje que va a ser hug, y dejar que el auto-layout calcule el tamaño solo a partir de los hijos ya agregados.</p>
+<h3 id="6-9-iconos-de-librerias-externas-traen-su-propio-color-hay-que-sobrescribirlo-explicitamente">6.9 Íconos de librerías externas traen su propio color — hay que sobrescribirlo explícitamente</h3>
+<p>Un ícono importado de una librería (ej. Simple Design System) no es un vector suelto: es un componente con su propia estructura interna, y el color vive en un nodo hijo (<code>Vector</code>/<code>Icon</code>) bindeado a <strong>la variable de color interna de esa librería</strong>, no a las nuestras. Insertar la instancia y solo ajustar tamaño/posición dejar el color de la librería puesto — visualmente puede pasar desapercibido si por casualidad se acerca al color esperado, pero no está atado al token del componente y rompe apenas cambie la variante (ej. mismo ícono oscuro en un botón <code>primary</code> con fondo de color, en vez de heredar el color de texto de esa variante).</p>
+<p>Regla: después de crear la instancia del ícono, hay que <strong>encontrar el nodo vectorial interno</strong> (no la instancia raíz) y sobrescribir explícitamente su <code>fill</code> o <code>stroke</code> (según cómo esté construido el ícono — muchas librerías de íconos usan <code>stroke</code>, no <code>fill</code>) con el token de color del componente que lo contiene. No alcanza con bindear la instancia raíz: el color vive un nivel más adentro.</p>
+<hr />
+<h2 id="7-por-que-este-documento-es-ai-ready">7. Por qué este documento es "AI-ready"</h2>
+<ul>
+<li><strong>Naming predecible</strong> (<code>{categoría}.{rol}.{variante}.{estado}</code>) → una IA puede inferir la estructura de un token que nunca vio.</li>
+<li><strong>Jerarquía explícita y con referencias</strong> (<code>{color.blue.500}</code>) → no hay que adivinar de dónde sale un valor.</li>
+<li><strong>JSON tipado con descripción obligatoria</strong> → cada token se explica a sí mismo.</li>
+<li><strong>Plantilla fija de componentes</strong> → un agente puede generar código o QA de accesibilidad componente por componente sin reinterpretar formato.</li>
+<li><strong>Manifest único</strong> (recomendado, ver más abajo) → punto de entrada claro para cualquier agente que llegue al repo por primera vez.</li>
+</ul>
+<h3 id="manifest-sugerido-manifest-json-a-crear-cuando-haya-archivos-reales">Manifest sugerido (<code>manifest.json</code>, a crear cuando haya archivos reales)</h3>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;nombre-del-design-system&quot;,
+  &quot;version&quot;: &quot;0.1.0&quot;,
+  &quot;tokens&quot;: {
+    &quot;primitive&quot;: &quot;tokens/primitive.json&quot;,
+    &quot;semantic&quot;: &quot;tokens/semantic.json&quot;,
+    &quot;component&quot;: &quot;tokens/component.json&quot;
+  },
+  &quot;components&quot;: &quot;components/&quot;,
+  &quot;docs&quot;: &quot;DESIGN-SYSTEM.md&quot;
+}
+</code></pre>
+<hr />
+<h2 id="8-proximos-pasos-sugeridos">8. Próximos pasos sugeridos</h2>
+<ol>
+<li>Elegir herramienta de export (Tokens Studio recomendado) y conectar con las Variables ya creadas en Figma.</li>
+<li>Exportar los 3 archivos JSON siguiendo <code>tokens.example.json</code> como referencia de formato.</li>
+<li>Documentar 1-2 componentes con <code>component-template.md</code> como piloto, para validar que la plantilla cubre los casos reales.</li>
+<li>Crear <code>manifest.json</code> una vez que existan los archivos reales.</li>
+<li>(Más adelante) Style Dictionary u otro transformer si se necesita generar CSS/TS desde los JSON.</li>
+</ol>
+<footer class="foot">Esta documentación se genera desde el archivo de Figma. No se edita a mano: los cambios se proponen desde el plugin.</footer>
+</article><aside class="toc" aria-label="En esta página"><h4>En esta página</h4><a href="#0-como-leer-este-documento">0. Cómo leer este documento</a><a href="#1-principios">1. Principios</a><a href="#2-arquitectura-de-tokens-3-capas">2. Arquitectura de tokens (3 capas)</a><a href="#3-formato-de-exportacion-a-definir-implementar">3. Formato de exportación (a definir/implementar)</a><a href="#4-documentacion-de-componentes">4. Documentación de componentes</a><a href="#5-accesibilidad-reglas-transversales">5. Accesibilidad (reglas transversales)</a><a href="#6-contribucion-y-gobernanza">6. Contribución y gobernanza</a><a href="#7-por-que-este-documento-es-ai-ready">7. Por qué este documento es "AI-ready"</a><a href="#8-proximos-pasos-sugeridos">8. Próximos pasos sugeridos</a></aside></main>
+</div>
+<script>
+/* Cada página abre desde arriba: el navegador no restaura el scroll de la página anterior.
+   Si el link trae un ancla (#seccion), se respeta y se va a ese título. */
+(function () {
+  try { history.scrollRestoration = "manual"; } catch (e) {}
+  function toTop() {
+    if (location.hash) return;
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    var side = document.querySelector(".side");
+    var cur = side && side.querySelector('[aria-current="page"]');
+    if (side && cur && side.scrollHeight > side.clientHeight) {
+      side.scrollTop = Math.max(0, cur.offsetTop - side.clientHeight / 3);
+    }
+  }
+  toTop();
+  document.addEventListener("DOMContentLoaded", toTop);
+  window.addEventListener("load", function () { toTop(); requestAnimationFrame(toTop); });
+  window.addEventListener("pageshow", toTop);
+})();
+</script>
+</body>
+</html>

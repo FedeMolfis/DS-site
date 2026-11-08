@@ -1,0 +1,17 @@
+# Design System for AI and Humans
+
+> Design system de 3 capas (primitivo → semántico → componente), versión v0.5.0. Generado desde Figma Variables. No inferir valores que no estén en estos archivos.
+
+## Documentos
+- [Guía y reglas](md/DESIGN-SYSTEM.md): arquitectura, accesibilidad y gobernanza
+- [Manifest](manifest.json): punto de entrada con rutas a todo
+- [Tokens](tokens/component.json): las 3 capas en DTCG (primitive, semantic, component)
+- [Snapshot](snapshot.json): lectura completa del archivo de Figma, incluidos los bindings de cada componente
+
+## Componentes
+- [Button](md/button.md): Elemento interactivo que dispara una acción.
+- [Input](md/input.md): Campo de texto de una sola línea para captura de datos del usuario.
+- [Switch](md/switch.md): Control de encendido/apagado inmediato (on/off) para una única opción independiente.
+- [Checkbox](md/checkbox.md): Control de selección binaria dentro de un grupo de opciones, con cambio pendiente de confirmación (a diferencia de Switch, que aplica al instante).
+- [Alert](md/alert.md): Mensaje persistente e inline (no flotante) que comunica el resultado de una acción o el estado de una sección de la página.
+- [Toast](md/toast.md): Notificación flotante y transitoria que confirma el resultado de una acción puntual del usuario.

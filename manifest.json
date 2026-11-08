@@ -1,0 +1,25 @@
+{
+  "name": "Design System for AI and Humans",
+  "version": "0.5.0",
+  "generatedBy": "DS Copilot (prototipo)",
+  "source": {
+    "fileKey": "99jEjprzx00m5aDXrUHyuO",
+    "fileName": "Design System for AI and Humans",
+    "readAt": "2026-10-21"
+  },
+  "docs": "md/DESIGN-SYSTEM.md",
+  "tokens": {
+    "primitive": "tokens/primitive.json",
+    "semantic": "tokens/semantic.json",
+    "component": "tokens/component.json"
+  },
+  "components": {
+    "Button": "md/button.md",
+    "Input": "md/input.md",
+    "Switch": "md/switch.md",
+    "Checkbox": "md/checkbox.md",
+    "Alert": "md/alert.md",
+    "Toast": "md/toast.md"
+  },
+  "snapshot": "snapshot.json"
+}

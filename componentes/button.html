@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Button · Design System for AI and Humans</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: barra superior + navegación lateral + contenido de lectura + índice de la página */
+:root{
+  --bg:#FAFAFC; --surface:#FFFFFF; --sunk:#F3F4F6; --fg:#0F172A; --muted:#334155; --faint:#5B6478;
+  --line:#E5E7EB; --line-strong:#9CA3AF; --accent:#4F46E5; --accent-ink:#3730A3; --accent-soft:#EEF2FF;
+  --ok:#047857; --ok-soft:#ECFDF5; --warn:#B45309; --warn-soft:#FFFBEB; --info:#1D4ED8; --info-soft:#EFF6FF;
+  --code-bg:#F1F2F7;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1020; --surface:#141829; --sunk:#1B2035; --fg:#E6E8F0; --muted:#B4BAD0; --faint:#9AA1BA;
+  --line:#272D45; --line-strong:#4A5272; --accent:#9FA6FF; --accent-ink:#C7CBFF; --accent-soft:#22264A;
+  --ok:#5FD3A6; --ok-soft:#0F2A22; --warn:#F3B661; --warn-soft:#2C2112; --info:#8FB4FF; --info-soft:#14223F;
+  --code-bg:#1B2035; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1020; --surface:#141829; --sunk:#1B2035; --fg:#E6E8F0; --muted:#B4BAD0; --faint:#9AA1BA;
+  --line:#272D45; --line-strong:#4A5272; --accent:#9FA6FF; --accent-ink:#C7CBFF; --accent-soft:#22264A;
+  --ok:#5FD3A6; --ok-soft:#0F2A22; --warn:#F3B661; --warn-soft:#2C2112; --info:#8FB4FF; --info-soft:#14223F;
+  --code-bg:#1B2035; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}a:hover{color:var(--accent-ink)}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+code{font-family:var(--mono);font-size:.84em;background:var(--code-bg);padding:.1em .38em;border-radius:4px;white-space:nowrap}
+pre{background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;font-size:13px;line-height:1.55}
+pre code{background:none;padding:0;white-space:pre;font-size:inherit}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.topbar-in{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-height:56px;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--fg);text-decoration:none;font-size:15px}
+.brand:hover{color:var(--fg)}
+.ver{font-family:var(--mono);font-size:12px;padding:2px 8px;border:1px solid var(--line);border-radius:6px;color:var(--muted)}
+.topbar .spacer{flex:1}
+.gen{font-size:12px;color:var(--faint)}
+.shell{display:flex;flex-wrap:wrap;align-items:flex-start;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));gap:0 40px;max-width:1400px;margin:0 auto}
+.side{flex:1 1 220px;max-width:260px;padding-block:28px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 56px);max-height:calc(100vh - 56px);overflow:auto}
+.side h4{margin:18px 0 6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.side h4:first-child{margin-top:0}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--muted);text-decoration:none;font-size:14px}
+.side a:hover{background:var(--sunk);color:var(--fg)}
+.side a[aria-current="page"]{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.main{flex:999 1 520px;min-width:0;padding-block:36px 72px;display:flex;gap:48px;align-items:flex-start}
+.doc{flex:1 1 auto;min-width:0;max-width:780px}
+.toc{flex:0 0 200px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);font-size:13px}
+.toc h4{margin:0 0 8px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.toc a{display:block;padding:3px 0 3px 10px;border-left:1px solid var(--line);color:var(--muted);text-decoration:none}
+.toc a:hover{color:var(--accent);border-left-color:var(--accent)}
+@media (max-width:1180px){.toc{display:none}}
+@media (max-width:820px){.side{position:static;max-width:none;max-height:none;padding-block:16px 0;flex-basis:100%;border-bottom:1px solid var(--line)}
+  .side nav{display:flex;flex-wrap:wrap;gap:4px}.side h4{display:none}.side a{padding:6px 10px;background:var(--sunk)}}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:34px;line-height:1.2;letter-spacing:-.02em;margin:6px 0 10px;text-wrap:balance}
+.lede{font-size:17px;color:var(--muted);margin:0 0 20px;max-width:62ch}
+.doc h2{font-size:22px;letter-spacing:-.01em;margin:44px 0 12px;padding-top:8px;text-wrap:balance;scroll-margin-top:80px}
+.doc h3{font-size:17px;margin:28px 0 8px;scroll-margin-top:80px}
+.doc h3 code{font-size:.9em}
+.doc p,.doc li{max-width:68ch}
+.doc ul,.doc ol{padding-left:22px}
+.doc li{margin:4px 0}
+.doc strong{font-weight:600}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin:14px 0 18px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-weight:600;font-size:12px;color:var(--muted);background:var(--sunk);padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td code{font-size:12px}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;box-shadow:inset 0 0 0 1px rgba(15,23,42,.18)}
+.mk{display:inline-flex;vertical-align:-2px;margin-right:4px}
+.mk.ok{color:var(--ok)}.mk.warn{color:var(--warn)}.mk.part{color:var(--info)}
+.callout{padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface)}
+.callout.ok{background:var(--ok-soft);border-color:transparent}
+.callout.warn{background:var(--warn-soft);border-color:transparent}
+.source{font-size:13px;color:var(--faint);border-left:2px solid var(--line);margin:0 0 8px;padding:2px 0 2px 12px}
+.source p{margin:0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:20px 0 8px}
+.facts div{background:var(--surface);padding:12px 14px}
+.facts dt{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.facts dd{margin:2px 0 0;font-size:14px;font-weight:500}
+.agent-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-family:var(--mono)}
+.preview{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:24px 0 4px}
+.preview-stage{background:#FFFFFF;padding:28px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;color:#0F172A}
+.preview-cap{font-size:12px;color:var(--faint);padding:8px 14px;border-top:1px solid var(--line);background:var(--surface)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:16px 0}
+.card{display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none;color:var(--fg)}
+.card:hover{border-color:var(--accent);color:var(--fg)}
+.card b{font-size:15px;font-weight:600}
+.card span{font-size:13px;color:var(--muted);line-height:1.45}
+.pill{display:inline-block;font-size:12px;font-weight:500;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.pill.done{background:var(--ok-soft);color:var(--ok)}
+.pill.review{background:var(--warn-soft);color:var(--warn)}
+.pill.open{background:var(--info-soft);color:var(--info)}
+.pill.semver{background:var(--accent-soft);color:var(--accent-ink);font-family:var(--mono);font-size:11px}
+.proto{font-size:13px;padding:10px 14px;border-radius:8px;background:var(--info-soft);color:var(--fg);margin:0 0 24px}
+.release{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:18px 20px;margin:16px 0}
+.release.draft{border-style:dashed;border-color:var(--line-strong)}
+.release header{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.release h2{margin:0;padding:0;font-family:var(--mono);font-size:19px;font-weight:500}
+.release h3{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:16px 0 4px}
+.release ul{margin:0}
+.dr{font-family:var(--mono);font-size:12px;color:var(--faint);white-space:nowrap}
+.foot{border-top:1px solid var(--line);margin-top:56px;padding-top:16px;font-size:12px;color:var(--faint)}
+/* vista previa: componentes renderizados con los valores de los tokens (modo claro del DS) */
+.pv-btn{display:inline-flex;align-items:center;gap:8px;border-radius:8px;font:500 14px/20px var(--sans);padding:8px 16px;border:1px solid transparent;cursor:pointer}
+.pv-btn.sm{font-size:12px;line-height:16px;padding:4px 12px}.pv-btn.lg{font-size:16px;line-height:24px;padding:12px 20px}
+.pv-primary{background:#4F46E5;color:#FFFFFF}.pv-primary:hover{background:#4338CA}.pv-primary:active{background:#3730A3}
+.pv-secondary{background:#FFFFFF;color:#0F172A;border-color:#9CA3AF}.pv-secondary:hover{background:#F3F4F6;border-color:#64748B}
+.pv-icon{background:#FFFFFF;color:#0F172A;border-color:#9CA3AF;padding:8px}.pv-icon:hover{background:#F3F4F6;border-color:#64748B}
+.pv-link{background:none;color:#4F46E5;padding:8px 4px}.pv-link:hover{color:#4338CA}
+.pv-btn:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+.pv-col{display:flex;flex-direction:column;gap:6px}
+.pv-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.pv-ctl{display:flex;gap:12px;align-items:flex-start;min-height:44px;cursor:pointer;padding:4px 0}
+.pv-ctl input{position:absolute;opacity:0;width:1px;height:1px}
+.pv-track{width:40px;height:24px;border-radius:999px;background:#F3F4F6;box-shadow:inset 0 0 0 1px #9CA3AF;position:relative;flex-shrink:0;transition:background .15s}
+.pv-track::after{content:"";position:absolute;top:4px;left:4px;width:16px;height:16px;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 1px #9CA3AF;transition:transform .15s}
+.pv-ctl input:checked+.pv-track{background:#4F46E5;box-shadow:none}
+.pv-ctl input:checked+.pv-track::after{transform:translateX(16px);box-shadow:none}
+.pv-ctl input:focus-visible+.pv-track,.pv-ctl input:focus-visible+.pv-box{outline:2px solid #4F46E5;outline-offset:3px}
+.pv-ctl.dis{opacity:.4;cursor:not-allowed}
+.pv-box{width:16px;height:16px;border-radius:4px;border:1px solid #9CA3AF;background:#FFFFFF;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;color:transparent}
+.pv-ctl:hover .pv-box{border-color:#64748B}
+.pv-ctl input:checked+.pv-box{background:#4F46E5;border-color:#4F46E5;color:#FFFFFF}
+.pv-ctl.err .pv-box{border-color:#B91C1C}
+.pv-lbl{font:500 14px/20px var(--sans);color:#0F172A}
+.pv-help{font:400 12px/16px var(--sans);color:#334155}
+.pv-help.err{color:#B91C1C}
+.pv-field{display:flex;flex-direction:column;gap:6px;width:280px;max-width:100%}
+.pv-field label{font:500 14px/20px var(--sans);color:#334155}
+.pv-field input{font:400 14px/20px var(--sans);color:#0F172A;background:#FFFFFF;border:1px solid #9CA3AF;border-radius:8px;padding:8px 16px;width:100%}
+.pv-field input::placeholder{color:#64748B}
+.pv-field input:hover{border-color:#64748B}
+.pv-field input:focus{outline:none;border:2px solid #4F46E5;padding:7px 15px}
+.pv-field.err input{border-color:#B91C1C}
+.pv-alert{display:flex;gap:8px;padding:16px;border-radius:8px;border:1px solid;width:100%;max-width:420px}
+.pv-alert b{display:block;font:500 14px/20px var(--sans);color:#0F172A}
+.pv-alert span{display:block;font:400 14px/20px var(--sans);color:#334155;margin-top:4px}
+.pv-alert svg{flex-shrink:0}
+.pv-toast{display:inline-flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;color:#FFFFFF;font:500 14px/20px var(--sans)}
+@media (prefers-reduced-motion:reduce){.pv-track,.pv-track::after{transition:none}}
+
+.tdesc{display:block;font-size:12px;color:var(--faint);margin-top:2px;max-width:42ch;white-space:normal}
+.status{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:13px;margin:16px 0 0}
+.status b{font-weight:600}
+.find{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:10px 0}
+.find h3{margin:0;font-size:15px}
+.find p{margin:0;grid-column:2;color:var(--muted);font-size:14px}
+.sev{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;white-space:nowrap;align-self:start;margin-top:2px}
+.sev.rule{background:var(--warn-soft);color:var(--warn)}.sev.check{background:var(--info-soft);color:var(--info)}.sev.ok{background:var(--ok-soft);color:var(--ok)}
+.meter{height:8px;border-radius:999px;background:var(--sunk);overflow:hidden;margin-top:6px}
+.meter span{display:block;height:100%;background:var(--accent)}
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent)"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>Design System for AI and Humans</a><span class="ver">v0.5.0</span>
+<span class="spacer"></span><span class="gen">Generado desde Figma con DS Copilot</span>
+</div></header>
+<div class="shell">
+<aside class="side"><nav aria-label="Documentación"><h4>Sistema</h4><a href="../index.html">Inicio</a><a href="../guia.html">Guía y principios</a><a href="../tokens.html">Tokens</a><a href="../auditoria.html">Auditoría</a><h4>Componentes</h4><a href="../componentes/button.html" aria-current="page">Button</a><a href="../componentes/input.html">Input</a><a href="../componentes/switch.html">Switch</a><a href="../componentes/checkbox.html">Checkbox</a><a href="../componentes/alert.html">Alert</a><a href="../componentes/toast.html">Toast</a><h4>Historial</h4><a href="../decisiones.html">Decisiones</a><a href="../changelog.html">Changelog</a><h4>Para agentes</h4><a href="../agentes.html">Archivos legibles por IA</a></nav></aside>
+<main class="main"><article class="doc"><div class="eyebrow">Componente</div><h1>Button</h1>
+<p class="lede">Elemento interactivo que dispara una acción.</p><a class="agent-link" href="../md/button.md">md/button.md</a>
+<p class="status"><span class="pill done">Textos aprobados</span><span>Escritos por el <b>copilot</b>, revisados por <b>Fede</b>.</span><span style="color:var(--faint)">La estructura en Figma no cambió desde la revisión.</span></p><dl class="facts">
+<div><dt>Variantes en Figma</dt><dd>12</dd></div>
+<div><dt>Tokens en uso</dt><dd>31 de 56</dd></div>
+<div><dt>Text Styles</dt><dd>Action/LG, Action/MD, Action/SM</dd></div>
+<div><dt>Nodo en Figma</dt><dd class="mono" style="font-family:var(--mono);font-size:13px">5:26, 5:33</dd></div>
+</dl><figure class="preview" style="margin-inline:0"><div class="preview-stage">
+<div class="pv-col"><div class="pv-row">
+<button class="pv-btn pv-primary"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Guardar cambios</button>
+<button class="pv-btn pv-secondary">Cancelar</button>
+<button class="pv-btn pv-icon" aria-label="Confirmar"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></button>
+<button class="pv-btn pv-link">Ver detalle</button>
+</div><div class="pv-row">
+<button class="pv-btn pv-primary sm">SM</button><button class="pv-btn pv-primary">MD</button><button class="pv-btn pv-primary lg">LG</button>
+</div></div></div>
+<figcaption class="preview-cap">Vista previa de referencia. En el plugin se reemplaza por la imagen exportada del component set en Figma.</figcaption></figure><h2 id="descripcion">Descripción</h2>
+<p>Elemento interactivo que dispara una acción. El sistema define 4 variantes con distinto nivel de énfasis visual: <code>primary</code>, <code>secondary</code>, <code>icon-secondary</code> (solo ícono) y <code>link</code> (texto, sin contenedor).</p>
+<p><strong>Usar cuando</strong>: hay una acción que el usuario puede ejecutar (enviar, guardar, confirmar, navegar).
+<strong>No usar cuando</strong>: es solo navegación entre páginas con URL propia → usar un componente de link/anchor semántico en su lugar (no un botón estilizado como link).</p>
+<h2 id="anatomia">Anatomía</h2>
+<ol>
+<li>Contenedor (background + borde opcional según variante)</li>
+<li>Label de texto (ausente en <code>icon-secondary</code>)</li>
+<li>Ícono (opcional en <code>primary</code>/<code>secondary</code>/<code>link</code>; obligatorio en <code>icon-secondary</code>) — implementado en Figma como property <code>Icon</code> (instance-swap) de la librería <strong>Simple Design System</strong>. Default: <code>Check</code>. Cualquier otro ícono de esa librería es válido como alternativa. Ver sección 4.0 de <code>DESIGN-SYSTEM.md</code> para la convención completa.</li>
+</ol>
+<h2 id="variantes-y-properties">Variantes y properties</h2>
+<h3 id="button-9-variantes">Button · 9 variantes</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Tipo</th>
+<th>Valores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Show Icon</code></td>
+<td>Booleano</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>Label</code></td>
+<td>Texto</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>Icon</code></td>
+<td>Instancia (swap)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>Style</code></td>
+<td>Variante</td>
+<td><code>Primary</code>, <code>Link</code>, <code>Secondary</code></td>
+</tr>
+<tr>
+<td><code>Size</code></td>
+<td>Variante</td>
+<td><code>MD</code>, <code>SM</code>, <code>LG</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="button-icon-secondary-3-variantes">Button Icon-Secondary · 3 variantes</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Tipo</th>
+<th>Valores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Icon</code></td>
+<td>Instancia (swap)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>Size</code></td>
+<td>Variante</td>
+<td><code>SM</code>, <code>MD</code>, <code>LG</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="tokens-que-consume">Tokens que consume</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Apunta a</th>
+<th>Primitivo</th>
+<th>Valor</th>
+<th>En el canvas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Button/radius</code></td>
+<td><code>radius/action</code></td>
+<td><code>radius/M</code></td>
+<td><code>8px</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/SM/padding-x</code></td>
+<td><code>Space/S</code></td>
+<td>—</td>
+<td><code>12px</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/SM/padding-y</code></td>
+<td><code>Space/XXS</code></td>
+<td>—</td>
+<td><code>4px</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/SM/font-size</code></td>
+<td><code>typography/action/SM/font-size</code></td>
+<td><code>Typography/size/XSM</code></td>
+<td><code>12px</code></td>
+<td>Vía Text Style</td>
+</tr>
+<tr>
+<td><code>Button/SM/line-height</code></td>
+<td><code>typography/action/SM/line-height</code></td>
+<td><code>Typography/line-height/xsm</code></td>
+<td><code>16px</code></td>
+<td>Vía Text Style</td>
+</tr>
+<tr>
+<td><code>Button/SM/font-weight</code></td>
+<td><code>typography/action/SM/font-weight</code></td>
+<td><code>Typography/weight/medium</code></td>
+<td><code>Medium</code></td>
+<td>Vía Text Style</td>
+</tr>
+<tr>
+<td><code>Button/SM/icon-size</code></td>
+<td><code>typography/action/SM/icon-size</code></td>
+<td><code>Typography/line-height/xsm</code></td>
+<td><code>16px</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/MD/padding-x</code></td>
+<td><code>Space/M</code></td>
+<td>—</td>
+<td><code>16px</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/MD/padding-y</code></td>
+<td><code>Space/XS</code></td>
+<td>—</td>
+<td><code>8px</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/MD/font-size</code></td>
+<td><code>typography/action/MD/font-size</code></td>
+<td><code>Typography/size/SM</code></td>
+<td><code>14px</code></td>
+<td>Vía Text Style</td>
+</tr>
+<tr>
+<td><code>Button/MD/line-height</code></td>
+<td><code>typography/action/MD/line-height</code></td>
+<td><code>Typography/line-height/sm</code></td>
+<td><code>20px</code></td>
+<td>Vía Text Style</td>
+</tr>
+<tr>
+<td><code>Button/MD/font-weight</code></td>
+<td><code>typography/action/MD/font-weight</code></td>
+<td><code>Typography/weight/medium</code></td>
+<td><code>Medium</code></td>
+<td>Vía Text Style</td>
+</tr>
+<tr>
+<td><code>Button/MD/icon-size</code></td>
+<td><code>typography/action/MD/icon-size</code></td>
+<td><code>Typography/line-height/sm</code></td>
+<td><code>20px</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/LG/padding-x</code></td>
+<td><code>Space/L</code></td>
+<td>—</td>
+<td><code>20px</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/LG/padding-y</code></td>
+<td><code>Space/S</code></td>
+<td>—</td>
+<td><code>12px</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/LG/font-size</code></td>
+<td><code>typography/action/LG/font-size</code></td>
+<td><code>Typography/size/MD</code></td>
+<td><code>16px</code></td>
+<td>Vía Text Style</td>
+</tr>
+<tr>
+<td><code>Button/LG/line-height</code></td>
+<td><code>typography/action/LG/line-height</code></td>
+<td><code>Typography/line-height/md</code></td>
+<td><code>24px</code></td>
+<td>Vía Text Style</td>
+</tr>
+<tr>
+<td><code>Button/LG/font-weight</code></td>
+<td><code>typography/action/LG/font-weight</code></td>
+<td><code>Typography/weight/medium</code></td>
+<td><code>Medium</code></td>
+<td>Vía Text Style</td>
+</tr>
+<tr>
+<td><code>Button/LG/icon-size</code></td>
+<td><code>typography/action/LG/icon-size</code></td>
+<td><code>Typography/line-height/md</code></td>
+<td><code>24px</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/border/focus</code></td>
+<td><code>action/focus/default</code></td>
+<td><code>Color/Brand/500</code></td>
+<td><code><span class="sw" style="background:#4F46E5"></span>#4F46E5</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/primary/text</code></td>
+<td><code>text/inverse</code></td>
+<td><code>Color/Neutral/00</code></td>
+<td><code><span class="sw" style="background:#FFFFFF"></span>#FFFFFF</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/primary/icon</code></td>
+<td><code>icon/inverse</code></td>
+<td><code>Color/Neutral/00</code></td>
+<td><code><span class="sw" style="background:#FFFFFF"></span>#FFFFFF</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/primary/background/default</code></td>
+<td><code>action/primary/default</code></td>
+<td><code>Color/Brand/500</code></td>
+<td><code><span class="sw" style="background:#4F46E5"></span>#4F46E5</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/primary/background/hover</code></td>
+<td><code>action/primary/hover</code></td>
+<td><code>Color/Brand/600</code></td>
+<td><code><span class="sw" style="background:#4338CA"></span>#4338CA</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/primary/background/pressed</code></td>
+<td><code>action/primary/pressed</code></td>
+<td><code>Color/Brand/700</code></td>
+<td><code><span class="sw" style="background:#3730A3"></span>#3730A3</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/primary/background/disabled</code></td>
+<td><code>action/primary/disabled</code></td>
+<td><code>Color/Neutral/300</code></td>
+<td><code><span class="sw" style="background:#9CA3AF"></span>#9CA3AF</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/secondary/text</code></td>
+<td><code>text/primary</code></td>
+<td><code>Color/Neutral/900</code></td>
+<td><code><span class="sw" style="background:#0F172A"></span>#0F172A</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/secondary/icon</code></td>
+<td><code>icon/primary</code></td>
+<td><code>Color/Neutral/900</code></td>
+<td><code><span class="sw" style="background:#0F172A"></span>#0F172A</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/secondary/border/default</code></td>
+<td><code>border/default</code></td>
+<td><code>Color/Neutral/300</code></td>
+<td><code><span class="sw" style="background:#9CA3AF"></span>#9CA3AF</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/secondary/border/hover</code></td>
+<td><code>border/strong</code></td>
+<td><code>Color/Neutral/500</code></td>
+<td><code><span class="sw" style="background:#64748B"></span>#64748B</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/secondary/border/pressed</code></td>
+<td><code>border/brand</code></td>
+<td><code>Color/Brand/500</code></td>
+<td><code><span class="sw" style="background:#4F46E5"></span>#4F46E5</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/secondary/background/default</code></td>
+<td><code>background/primary</code></td>
+<td><code>Color/Neutral/00</code></td>
+<td><code><span class="sw" style="background:#FFFFFF"></span>#FFFFFF</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/secondary/background/hover</code></td>
+<td><code>background/secondary</code></td>
+<td><code>Color/Neutral/50</code></td>
+<td><code><span class="sw" style="background:#F3F4F6"></span>#F3F4F6</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/secondary/background/pressed</code></td>
+<td><code>background/tertiary</code></td>
+<td><code>Color/Neutral/100</code></td>
+<td><code><span class="sw" style="background:#E5E7EB"></span>#E5E7EB</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/secondary/background/disabled</code></td>
+<td><code>action/secondary/disabled</code></td>
+<td><code>Color/Neutral/300</code></td>
+<td><code><span class="sw" style="background:#9CA3AF"></span>#9CA3AF</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/icon/default</code></td>
+<td><code>icon/primary</code></td>
+<td><code>Color/Neutral/900</code></td>
+<td><code><span class="sw" style="background:#0F172A"></span>#0F172A</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/icon/disabled</code></td>
+<td><code>icon/disabled</code></td>
+<td><code>Color/Neutral/400</code></td>
+<td><code><span class="sw" style="background:#94A3B8"></span>#94A3B8</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/border/default</code></td>
+<td><code>border/default</code></td>
+<td><code>Color/Neutral/300</code></td>
+<td><code><span class="sw" style="background:#9CA3AF"></span>#9CA3AF</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/border/hover</code></td>
+<td><code>border/strong</code></td>
+<td><code>Color/Neutral/500</code></td>
+<td><code><span class="sw" style="background:#64748B"></span>#64748B</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/border/focus</code></td>
+<td><code>border/brand</code></td>
+<td><code>Color/Brand/500</code></td>
+<td><code><span class="sw" style="background:#4F46E5"></span>#4F46E5</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/border/disabled</code></td>
+<td><code>border/subtle</code></td>
+<td><code>Color/Neutral/200</code></td>
+<td><code><span class="sw" style="background:#D1D5DB"></span>#D1D5DB</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/background/default</code></td>
+<td><code>background/primary</code></td>
+<td><code>Color/Neutral/00</code></td>
+<td><code><span class="sw" style="background:#FFFFFF"></span>#FFFFFF</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/background/hover</code></td>
+<td><code>background/secondary</code></td>
+<td><code>Color/Neutral/50</code></td>
+<td><code><span class="sw" style="background:#F3F4F6"></span>#F3F4F6</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/background/pressed</code></td>
+<td><code>background/tertiary</code></td>
+<td><code>Color/Neutral/100</code></td>
+<td><code><span class="sw" style="background:#E5E7EB"></span>#E5E7EB</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/background/disabled</code></td>
+<td><code>background/secondary</code></td>
+<td><code>Color/Neutral/50</code></td>
+<td><code><span class="sw" style="background:#F3F4F6"></span>#F3F4F6</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/link/text/default</code></td>
+<td><code>text/brand/default</code></td>
+<td><code>Color/Brand/500</code></td>
+<td><code><span class="sw" style="background:#4F46E5"></span>#4F46E5</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/link/text/hover</code></td>
+<td><code>text/brand/hover</code></td>
+<td><code>Color/Brand/600</code></td>
+<td><code><span class="sw" style="background:#4338CA"></span>#4338CA</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/link/text/pressed</code></td>
+<td><code>text/brand/pressed</code></td>
+<td><code>Color/Brand/700</code></td>
+<td><code><span class="sw" style="background:#3730A3"></span>#3730A3</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/link/text/disabled</code></td>
+<td><code>text/disabled</code></td>
+<td><code>Color/Neutral/400</code></td>
+<td><code><span class="sw" style="background:#94A3B8"></span>#94A3B8</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/link/icon/default</code></td>
+<td><code>action/primary/default</code></td>
+<td><code>Color/Brand/500</code></td>
+<td><code><span class="sw" style="background:#4F46E5"></span>#4F46E5</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/link/icon/hover</code></td>
+<td><code>action/primary/hover</code></td>
+<td><code>Color/Brand/600</code></td>
+<td><code><span class="sw" style="background:#4338CA"></span>#4338CA</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/link/icon/pressed</code></td>
+<td><code>action/primary/pressed</code></td>
+<td><code>Color/Brand/700</code></td>
+<td><code><span class="sw" style="background:#3730A3"></span>#3730A3</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/link/icon/disabled</code></td>
+<td><code>action/primary/disabled</code></td>
+<td><code>Color/Neutral/300</code></td>
+<td><code><span class="sw" style="background:#9CA3AF"></span>#9CA3AF</code></td>
+<td>Sin uso en el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/SM/padding</code><br><span class="tdesc">Padding simétrico (4 lados) para el botón solo-ícono, para garantizar contenedor cuadrado. Distinto de Button/*/padding-x que es asimétrico (pensado para label de texto).</span></td>
+<td><code>Space/XXS</code></td>
+<td>—</td>
+<td><code>4px</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/MD/padding</code><br><span class="tdesc">Padding simétrico (4 lados) para el botón solo-ícono, para garantizar contenedor cuadrado. Distinto de Button/*/padding-x que es asimétrico (pensado para label de texto).</span></td>
+<td><code>Space/XS</code></td>
+<td>—</td>
+<td><code>8px</code></td>
+<td>En el canvas</td>
+</tr>
+<tr>
+<td><code>Button/icon-secondary/LG/padding</code><br><span class="tdesc">Padding simétrico (4 lados) para el botón solo-ícono, para garantizar contenedor cuadrado. Distinto de Button/*/padding-x que es asimétrico (pensado para label de texto).</span></td>
+<td><code>Space/S</code></td>
+<td>—</td>
+<td><code>12px</code></td>
+<td>En el canvas</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="hallazgos-de-la-auditoria">Hallazgos de la auditoría</h2>
+<p class="callout warn"><span class="mk warn"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg></span> <strong>El component set no modela estados.</strong> Hay 22 tokens de hover, pressed, disabled o focus definidos, pero ninguna variante los usa. En código se aplican como estados del navegador; en Figma no se pueden previsualizar.</p>
+<p class="callout warn"><span class="mk warn"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg></span> <strong>3 tokens sin uso en el canvas:</strong> <code>Button/SM/icon-size</code>, <code>Button/MD/icon-size</code>, <code>Button/LG/icon-size</code>.</p>
+<p class="callout ok"><span class="mk ok"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span> <strong>31 de 56 tokens</strong> se usan en el canvas, directo o a través de su alias.</p>
+<p class="callout warn"><span class="mk warn"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg></span> <strong>3 de 56 tokens tienen descripción</strong> en Figma (5%). El principio 4 pide el 100%.</p>
+<h2 id="accesibilidad">Accesibilidad</h2>
+<ul>
+<li><strong>Rol</strong>: usar elemento nativo <code>&lt;button&gt;</code> (no <code>div</code> + <code>role="button"</code>), así el navegador resuelve foco y activación por teclado gratis.</li>
+<li><strong>Contraste verificado</strong> (WCAG AA, texto normal ≥4.5:1):</li>
+<li><code>primary</code> texto blanco sobre <code><span class="sw" style="background:#4F46E5"></span>#4F46E5</code> (default) → <strong>≈6.5:1</strong>, pasa AA.</li>
+<li><code>secondary</code> texto <code><span class="sw" style="background:#0F172A"></span>#0F172A</code> sobre <code><span class="sw" style="background:#FFFFFF"></span>#FFFFFF</code> → <strong>≈17.9:1</strong>, pasa AA y AAA.</li>
+<li><code>primary</code> disabled: blanco sobre <code><span class="sw" style="background:#9CA3AF"></span>#9CA3AF</code> → <strong>≈2.5:1</strong>, no pasa AA. WCAG exime a controles deshabilitados de este criterio (no transmiten información activa), así que es aceptable, pero conviene confirmarlo como decisión consciente y no accidental.</li>
+<li><strong><span class="mk ok" role="img" aria-label="definido"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span> Bug corregido — color del ícono no estaba atado a los tokens</strong>: el ícono real (instancia de <code>Check</code>, librería Simple Design System) tenía su stroke bindeado a la variable de color <strong>interna de la librería</strong> (<code><span class="sw" style="background:#1E1E1E"></span>#1E1E1E</code>, gris fijo), no a <code>Button.{variant}.icon</code>. Pasaba desapercibido a simple vista pero rompía el contrato: en <code>primary</code>, daba un ícono oscuro sobre fondo índigo con contraste real de <strong>≈2.57:1</strong> — muy por debajo del mínimo de 3:1 para elementos gráficos (WCAG 1.4.11). Se corrigió bindeando el stroke del vector interno del ícono (no el nodo instancia, el vector hijo) a <code>Button.{variant}.icon</code> en las 12 variantes (9 de Button + 3 de Icon-Secondary). Como el ícono ahora comparte color con el texto de cada variante, el contraste verificado arriba para texto aplica igual al ícono.</li>
+<li><strong>Foco visible</strong>: resuelto para <code>primary</code>, <code>secondary</code> e <code>icon-secondary</code> vía <code>Button.border.focus</code>. Para <code>link</code>, que no tiene contenedor con borde, la recomendación es implementar el foco como <code>outline</code> de CSS (no <code>border</code>) reutilizando el mismo color <code>action/focus/default</code> (<code><span class="sw" style="background:#4F46E5"></span>#4F46E5</code>) — no necesita un token nuevo, ese semántico ya existe y se puede consumir directo en el CSS del link sin pasar por un token de componente dedicado.</li>
+<li><strong><code>icon-secondary</code> sin label visible</strong>: requiere <code>aria-label</code> obligatorio en implementación; no hay forma de derivarlo de los tokens, es responsabilidad de quien instancia el componente.</li>
+<li><strong>Teclado</strong>: con <code>&lt;button&gt;</code> nativo, Enter y Space activan por defecto. No requiere JS adicional.</li>
+</ul>
+<h2 id="ejemplos-de-uso">Ejemplos de uso</h2>
+<p><strong>Correcto</strong>: un botón <code>primary</code> por vista/formulario para la acción principal ("Guardar cambios"), acompañado de un <code>secondary</code> para la acción alternativa ("Cancelar").</p>
+<p><strong>Incorrecto</strong>: dos o más botones <code>primary</code> compitiendo por atención en la misma pantalla — diluye la jerarquía visual que la variante está diseñada para comunicar.</p>
+<h2 id="notas-de-implementacion">Notas de implementación</h2>
+<ul>
+<li><span class="mk ok" role="img" aria-label="definido"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span> Namespace unificado bajo <code>Button.*</code> (color, radius, tamaños, tipografía y focus conviven en un solo árbol). Casing consistente en todo el componente.</li>
+<li><span class="mk ok" role="img" aria-label="definido"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span> Los 4 gaps originales (radius, spacing, focus, tipografía) cerrados con Variables reales, valores exactos a lo propuesto en cada iteración.</li>
+<li><span class="mk ok" role="img" aria-label="definido"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span> <code>icon-secondary</code> ahora usa padding simétrico dedicado (<code>Button.icon-secondary.{SM|MD|LG}.padding</code>), no el padding asimétrico compartido con las variantes de texto — garantiza contenedor cuadrado 1:1. Ver tabla de tokens de <code>icon-secondary</code> arriba.</li>
+<li><span class="mk ok" role="img" aria-label="definido"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span> Sistema de íconos resuelto: librería <strong>Simple Design System</strong>, íconos como instancias reales (no placeholders), escalado uniforme por tamaño, y <strong>color bindeado al token correcto por variante</strong> (bug corregido — venían con el color interno fijo de la librería, no atado a nuestros tokens; ver Accesibilidad).</li>
+<li>Único punto abierto, no bloqueante: si existe o hace falta una variante <code>destructive</code>/<code>danger</code> (los primitivos de rojo existen en el sistema pero ningún token de <code>Button</code> los referencia todavía).</li>
+<li><code>Button</code> está listo para pasar a implementación en código con esta doc como contrato.</li>
+</ul>
+<footer class="foot">Esta documentación se genera desde el archivo de Figma. No se edita a mano: los cambios se proponen desde el plugin.</footer>
+</article><aside class="toc" aria-label="En esta página"><h4>En esta página</h4><a href="#descripcion">Descripción</a><a href="#anatomia">Anatomía</a><a href="#variantes-y-properties">Variantes y properties</a><a href="#tokens-que-consume">Tokens que consume</a><a href="#hallazgos-de-la-auditoria">Hallazgos de la auditoría</a><a href="#accesibilidad">Accesibilidad</a><a href="#ejemplos-de-uso">Ejemplos de uso</a><a href="#notas-de-implementacion">Notas de implementación</a></aside></main>
+</div>
+<script>
+/* Cada página abre desde arriba: el navegador no restaura el scroll de la página anterior.
+   Si el link trae un ancla (#seccion), se respeta y se va a ese título. */
+(function () {
+  try { history.scrollRestoration = "manual"; } catch (e) {}
+  function toTop() {
+    if (location.hash) return;
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    var side = document.querySelector(".side");
+    var cur = side && side.querySelector('[aria-current="page"]');
+    if (side && cur && side.scrollHeight > side.clientHeight) {
+      side.scrollTop = Math.max(0, cur.offsetTop - side.clientHeight / 3);
+    }
+  }
+  toTop();
+  document.addEventListener("DOMContentLoaded", toTop);
+  window.addEventListener("load", function () { toTop(); requestAnimationFrame(toTop); });
+  window.addEventListener("pageshow", toTop);
+})();
+</script>
+</body>
+</html>
